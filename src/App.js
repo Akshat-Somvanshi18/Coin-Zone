@@ -1,4 +1,5 @@
 import "./App.css";
+import { useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import { Layout, Typography, Space } from "antd";
 import {
@@ -8,13 +9,18 @@ import {
   Cryptocurrencies,
   News,
   CryptoDetails,
+  UserPanel
 } from "./components";
 
+
+
 function App() {
+
+  const [isAuth,setIsAuth] = useState(localStorage.getItem("isAuth"));
   return (
     <div className="app">
       <div className="navbar">
-        <Navbar />
+        <Navbar isAuth = {isAuth} setIsAuth = {setIsAuth}/>
       </div>
 
       <div className="main">
@@ -23,12 +29,13 @@ function App() {
             <Routes>
               <Route exact path="/" element={<Homepage />} />
               <Route exact path="/exchanges" element={<Exchanges />} />
+              <Route exact path="/userpanel" element={<UserPanel isAuth = {isAuth} setIsAuth = {setIsAuth}/>} />
               <Route
                 exact
                 path="/cryptocurrencies"
                 element={<Cryptocurrencies />}
               />
-              <Route exact path="/cypto/:coinID" element={<CryptoDetails />} />
+              <Route exact path="/crypto/:coinId" element={<CryptoDetails />} />
               <Route exact path="/news" element={<News />} />
             </Routes>
           </div>
@@ -38,7 +45,7 @@ function App() {
             level={5}
             style={{ color: "white", textAlign: "center" }}
           >
-            Cryptoverse
+            Coin Zone
             <br />
             All rights reserved
           </Typography.Title>
